@@ -1,0 +1,282 @@
+/* Netflix-style movies browse */
+.movies-page {
+  min-height: 100vh;
+  background: #141414;
+  color: #fff;
+}
+
+/* Header */
+.movies-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.7) 0%, transparent 100%);
+  padding: 1rem 3%;
+  transition: background 0.3s;
+}
+
+.movies-header.scrolled {
+  background: #141414;
+}
+
+.movies-header-inner {
+  max-width: 1920px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.movies-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #e50914;
+  font-weight: 700;
+  font-size: 1.5rem;
+  text-decoration: none;
+}
+
+.movies-logo .logo-icon {
+  font-size: 1.75rem;
+}
+
+.movies-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.movies-nav a {
+  color: #e5e5e5;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.movies-nav a:hover {
+  color: #b3b3b3;
+}
+
+.movies-header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.movies-icon-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.movies-user-name {
+  font-size: 0.9rem;
+  color: #e5e5e5;
+  margin-right: 0.25rem;
+}
+
+.movies-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  background: #333;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  color: inherit;
+}
+
+.movies-avatar:hover {
+  background: #444;
+}
+
+/* Hero */
+.movies-hero {
+  position: relative;
+  height: 56vw;
+  max-height: 80vh;
+  min-height: 400px;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 3% 8%;
+  margin-bottom: -8rem;
+}
+
+.movies-hero-backdrop {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center top;
+}
+
+.movies-hero-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    #141414 0%,
+    transparent 50%,
+    rgba(0, 0, 0, 0.3) 100%
+  );
+}
+
+.movies-hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 40rem;
+}
+
+.movies-hero-title {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+}
+
+.movies-hero-desc {
+  font-size: 1.1rem;
+  color: #e5e5e5;
+  margin-bottom: 1.25rem;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+}
+
+.movies-hero-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.movies-btn {
+  padding: 0.6rem 1.5rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: opacity 0.2s;
+}
+
+.movies-btn:hover {
+  opacity: 0.9;
+}
+
+.movies-btn-play {
+  background: #fff;
+  color: #000;
+}
+
+.movies-btn-info {
+  background: rgba(255, 255, 255, 0.3);
+  color: #fff;
+}
+
+/* Rows */
+.movies-main {
+  padding-top: 10rem;
+  padding-bottom: 4rem;
+}
+
+.movies-row {
+  margin-bottom: 2.5rem;
+  padding: 0 3%;
+}
+
+.movies-row-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  padding-left: 0;
+}
+
+.movies-row-slider {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.5rem 0;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.movies-row-slider::-webkit-scrollbar {
+  height: 6px;
+}
+
+.movies-row-slider::-webkit-scrollbar-track {
+  background: #333;
+  border-radius: 3px;
+}
+
+.movies-row-slider::-webkit-scrollbar-thumb {
+  background: #666;
+  border-radius: 3px;
+}
+
+.movies-poster-wrap {
+  flex: 0 0 auto;
+  width: 200px;
+}
+
+.movies-poster {
+  position: relative;
+  aspect-ratio: 2/3;
+  border-radius: 6px;
+  background-color: #1a1a1a;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.movies-poster:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.movies-poster img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.movies-poster-title {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+  line-height: 1.2;
+  padding: 0.75rem;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+}
+
+.movies-poster.poster-error img {
+  display: none;
+}
+
+.movies-poster.poster-error .movies-poster-title {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: #1a1a1a;
+  padding: 0.5rem;
+  font-size: 0.8rem;
+}
