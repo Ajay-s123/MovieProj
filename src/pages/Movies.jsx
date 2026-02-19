@@ -50,10 +50,20 @@ export default function Movies() {
       <main className="movies-main">
         {/* Hero banner - uses wide backdrop image like Netflix */}
         <section className="movies-hero">
-          <div
-            className="movies-hero-backdrop"
-            style={{ backgroundImage: HERO_MOVIE.poster ? `url(${HERO_MOVIE.poster})` : undefined }}
-          />
+          <div className="movies-hero-backdrop">
+            <img
+              src={HERO_MOVIE.poster || `https://picsum.photos/seed/hero/1920/800`}
+              alt=""
+              onError={(e) => {
+                e.target.style.display = 'none'
+                e.target.nextElementSibling?.style.display = 'block'
+              }}
+            />
+            <div
+              className="movies-hero-backdrop-fallback"
+              style={{ display: 'none', backgroundImage: `url(https://picsum.photos/seed/hero2/1920/800)` }}
+            />
+          </div>
           <div className="movies-hero-shade" />
           <div className="movies-hero-content">
             <h1 className="movies-hero-title">{HERO_MOVIE.title}</h1>
@@ -76,26 +86,34 @@ export default function Movies() {
           <section key={row.title} className="movies-row">
             <h2 className="movies-row-title">{row.title}</h2>
             <div className="movies-row-slider">
-              {row.movies.map((movie) => (
-                <div key={movie.id} className="movies-poster-wrap">
-                  <div className="movies-poster" data-poster={movie.poster || ''}>
-                    {movie.poster ? (
+              {row.movies.map((movie) => {
+                const fallbackPoster = `https://picsum.photos/seed/movie-${movie.id}/200/300`
+                const posterUrl = movie.poster || fallbackPoster
+                return (
+                  <div key={movie.id} className="movies-poster-wrap">
+                    <div className="movies-poster">
                       <img
-                        src={movie.poster}
+                        src={posterUrl}
                         alt=""
                         loading="lazy"
                         referrerPolicy="no-referrer"
                         onError={(e) => {
-                          e.target.style.display = 'none'
-                          const wrap = e.target.closest('.movies-poster')
-                          if (wrap) wrap.classList.add('poster-error')
+                          const img = e.target
+                          if (img.dataset.fallbackUsed) {
+                            img.style.display = 'none'
+                            img.closest('.movies-poster')?.classList.add('poster-error')
+                            return
+                          }
+                          img.dataset.fallbackUsed = '1'
+                          img.src = fallbackPoster
+                          img.onerror = null
                         }}
                       />
-                    ) : null}
-                    <span className="movies-poster-title">{movie.title}</span>
+                      <span className="movies-poster-title">{movie.title}</span>
+                    </div>
                   </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
           </section>
         ))}
